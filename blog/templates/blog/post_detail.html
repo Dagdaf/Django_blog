@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post detail</title>
+</head>
+<body>
+<style>
+
+</style>
+    <div style="text-align: center; margin-bottom: 40px; margin-top: 40px">
+        <a style="font-size:35px; color: black" href="{% url 'post_list' %}">
+            Django Blog
+        </a>
+    </div>
+    <div style="text-align: center; margin-bottom: 40px; margin-top: 40px">
+        <a style="margin: 5px; font-size:20px; color: black; border: 1px solid; border-radius: 20px; padding: 5px" href="{% url 'post_list' %}">
+            Back to post
+        </a>
+        <a style="margin: 5px; font-size:20px; color: black; border: 1px solid; border-radius: 20px; padding: 5px" href="{% url 'post_edit' post_pk=post.pk %}">
+            Edit
+        </a>
+        <a style="margin: 5px; font-size:20px; color: black; border: 1px solid; border-radius: 20px; padding: 5px" href="{% url 'post_delete' post_pk=post.pk %}">
+            Delete
+        </a>
+    </div>
+
+    <div style="">
+        <div style="text-align: center">
+            <div style="">
+                {{ post.publish_date }}
+            </div>
+            <div style="font-size: 30px; padding: 20px">
+                {{ post.title }}
+            </div>
+            <div style="margin-top: 30px">
+                {{ post.text }}
+            </div>
+        </div>
+     </div>
+
+</body>
+</html>
