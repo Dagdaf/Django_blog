@@ -16,31 +16,76 @@
         </p>
     </div>
 
-    <div style="margin-bottom: 40px; margin-top: 40px; margin-left: 50px">
-        <a style="font-size:20px; color: black; border: 1px solid; border-radius: 20px; padding: 5px" href="{% url 'post_new' %}">
-            Create new post
+    <div style="margin-bottom: 40px; margin-top: 40px; margin-left: 50px; display: inline-block">
+        <a style="font-size:15px; color: black; border: 1px solid; border-radius: 20px; padding: 5px" href="{% url 'post_new' %}">
+            Создать новый пост
         </a>
-        <a style="font-size:20px; color: black; border: 1px solid; border-radius: 20px; padding: 5px" href="{% url 'post_draft' %}">
-            Drafted Posts
+        <a style="font-size:15px; color: black; border: 1px solid; border-radius: 20px; padding: 5px" href="{% url 'post_draft' %}">
+            Черновики
         </a>
-        <a style="font-size:20px; color: black; border: 1px solid; border-radius: 20px; padding: 5px" href="{% url 'post_list' %}">
-            Published Posts
+        <a style="font-size:15px; color: black; border: 1px solid; border-radius: 20px; padding: 5px" href="{% url 'post_list' %}">
+            Опубликованные посты
+        </a>
+        <a style="font-size:15px; color: black; border: 1px solid; border-radius: 20px; padding: 5px" href="{% url 'recommends' %}">
+            Рекомендованные посты
         </a>
     </div>
 
-    {% for post in posts %}
-    <div style="margin: 20px; display: inline-block">
-        <div style="border:1px solid">
-            <div style="margin: 20px; text-align: center">
-                <a href="{% url 'post_detail' post_pk=post.pk %}">
-                    {{ post.title }}
-                </a>
-            </div>
-            <div style="border-top:1px solid">
-                {{ post.publish_date }}
+
+    {% if user.is_authenticated %}
+        <div style="margin-left:65%; display: inline-block">
+            <b>Hi {{ user.username }}!</b>
+            <p><a href="{% url 'logout' %}">Выйти</a></p>
+        </div>
+    {% else %}
+        <div style="margin-left:60%; display: inline-block">
+            <b >Вы не авторизованы.</b>
+            <br>
+                <a href="{% url 'login' %}">Войти</a>
+                <a href="{% url 'signup' %}">Регистрация</a>
+            </br>
+        </div>
+    {% endif %}
+    <div>
+        {% for post in posts %}
+        <div style="margin: 20px; display: inline-block; max-width: 70%">
+            <div style="border:1px solid">
+                <div style="margin: 20px; text-align: center">
+                    <a href="{% url 'post_detail' post_pk=post.pk %}">
+                     {{ post.title }}
+                    </a>
+                </div>
+                <div style="border-top:1px solid">
+                    {{ post.publish_date }}
+                </div>
             </div>
         </div>
-     </div>
-    {% endfor %}
+        {% endfor %}
+
+        <div style="margin-left: 90%; display: block"><b><br>Категории</br></b>
+
+        {% for i in category %}
+            <br>
+                <a href="{% url 'category_posts' category_pk=i.pk %}">{{ i.title }}</a>
+            </br>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>

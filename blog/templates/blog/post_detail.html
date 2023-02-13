@@ -15,14 +15,19 @@
     </div>
     <div style="text-align: center; margin-bottom: 40px; margin-top: 40px">
         <a style="margin: 5px; font-size:20px; color: black; border: 1px solid; border-radius: 20px; padding: 5px" href="{% url 'post_list' %}">
-            Back to post
+            Назад к постам
         </a>
         <a style="margin: 5px; font-size:20px; color: black; border: 1px solid; border-radius: 20px; padding: 5px" href="{% url 'post_edit' post_pk=post.pk %}">
-            Edit
+            Редактировать
         </a>
         <a style="margin: 5px; font-size:20px; color: black; border: 1px solid; border-radius: 20px; padding: 5px" href="{% url 'post_delete' post_pk=post.pk %}">
-            Delete
+            Удалить
         </a>
+        {% if post.published == False %}
+        <a style="margin: 5px; font-size:20px; color: black; border: 1px solid; border-radius: 20px; padding: 5px" href="{% url 'published_post' post_pk=post.pk %}">
+            Опубликовать
+        </a>
+        {% endif %}
     </div>
 
     <div style="">
@@ -38,6 +43,29 @@
             </div>
         </div>
      </div>
+
+    <div>
+        {% if post.published == True %}
+        <h2>Рейтинг {{ post_rating }}</h2>
+        <h3>Комментарии</h3>
+        <form action="" method="POST">{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Добавить">
+        </form>
+        {% for i in comments %}
+            <br>{{ i.author }}</br>
+            <br>{{ i }}</br>
+            <br>{{ i.publish_date }}</br>
+            <br>Оценка {{ i.rating }}</br>
+            {% if user.id == i.author.id %}
+            <br><a  href="{% url 'comment_delete' post_pk=post.pk comment_pk=i.pk %}">
+            Удалить
+            </a></br>
+            {% endif %}
+        {% endfor %}
+        <h4>Количество комментариев {{ counter }}</h4>
+        {% endif %}
+    </div>
 
 </body>
 </html>
